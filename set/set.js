@@ -37,22 +37,77 @@ function Set() {
     this.values = function() {
         return Object.keys(items);
     };
+
+    this.union = function(otherSet) {
+    	var unionSet = new Set();
+
+    	var values = this.values();
+    	for (var i = 0; i<values.length; i++) {
+    		unionSet.add(values[i]);
+    	}
+
+    	values = otherSet.values();
+    	for (var i=0; i<values.length; i++) {
+    		unionSet.add(values[i]);
+    	}
+
+    	return unionSet;
+    };
+
+    this.intersection = function(otherSet) {
+    	var intersectionSet = new Set();
+
+    	var values = this.values();
+    	for (var i = 0; i < values.length; i++) {
+    		if (otherSet.has(values[i])) {
+    			intersectionSet.add(values[i]);
+    		}
+    	}
+
+    	return intersectionSet;
+    };
+
+    this.difference = function(otherSet) {
+    	var differenceSet = new Set();
+
+    	var values = this.values();
+    	for (var i = 0; i < values.length; i++) {
+    		if (!otherSet.has(values[i])) {
+    			differenceSet.add(values[i]);
+    		}
+    	}
+    };
+
+    this.subset = function(otherSet) {
+
+    	if (this.size() > otherSet.size()) {
+    		return false;
+    	} else {
+    		var values = this.values();
+    		for (var i = 0; i < values.length; i++) {
+    			if (!otherSet.has(values[i])) {
+    				return false;
+    			}
+    		}
+    		return true;
+    	}
+    };
 };
 
-var set = new Set();
+var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+setA.add(4);
 
-set.add(1);
-console.log(set.values()); //outputs ["1"]
-console.log(set.has(1));   //outputs true
-console.log(set.size());   //outputs 1
+var setB = new Set();
+setB.add(3);
+setB.add(4);
+setB.add(5);
+setB.add(6);
 
-set.add(2);
-console.log(set.values()); //outputs ["1", "2"]
-console.log(set.has(2));   //true
-console.log(set.size());   //2
+var unionAB = setA.union(setB);
 
-set.remove(1);
-console.log(set.values()); //outputs ["2"]
+console.log(unionAB.values());
 
-set.remove(2);
-console.log(set.values()); //outputs []
+
