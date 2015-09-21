@@ -132,8 +132,7 @@ function LinkedList() {
 		return head;
 	};
 
-
-}
+};
 
 var linkedlist = new LinkedList();
 
