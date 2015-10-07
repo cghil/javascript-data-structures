@@ -134,13 +134,64 @@ function LinkedList() {
 
 };
 
-var linkedlist = new LinkedList();
+function HashTable() {
+	var table = [];
 
-linkedlist.append('first');
-linkedlist.append('second');
-linkedlist.append('string');
+	var loseloseHashCode = function(key) {
+		var hash = 0;
+		for (var i = 0; i < key.length; i++) {
+			hash += key.charCodeAt(i);
+		}
+		return hash % 37
+	};
 
-console.log(linkedlist.toString());
-console.log('is the list emtpy? ' + linkedlist.isEmpty());
-console.log(linkedlist.indexOf('first'));
+	var ValuePair = function(key, value) {
+		this.key = key;
+		this.value = value;
 
+		this.toString = function(){
+			return '[' + this.key + ' - ' + this.value + ']';
+		}
+	};
+
+	this.put = function(key, value) {
+		var position = loseloseHashCode(key);
+		if (table[position] == undefined) {
+			tabel[position] = new LinkedList();
+		}
+		table[position].append(new ValuePair(key, value));
+	};
+
+	this.get = function(key) {
+		var position = loseloseHashCode(key);
+		if (table[position] !== undefined) {
+			// iterate linked list to find the key/value
+			var current = table[position].getHead();
+			while (current.next) {
+				if (current.element.key === key) {
+					return current.element.value;
+				}
+
+				current = current.next;
+			}
+
+			if (current.element.key === key) {
+				return current.element.value;
+			}
+		}
+
+		return undefined;
+
+	};
+
+	this.remove = function(key) {
+		table[loseloseHashCode(key)] = undefined;
+	};
+}
+
+var hash = new HashTable();
+hash.put('Gandalf', 'gandalf@email.com');
+hash.put('John', 'johnsnow@email.com');
+hash.put('Tyrion', 'tyrion@email.com');
+
+console.log(hash.get('Gandalf'));
