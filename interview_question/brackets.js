@@ -33,12 +33,10 @@ function isValid(code) {
 
 				}
 			}
-
 		}
 	}
-
 	return openersStack.length === 0;
 }
 
-console.log(isValid('[]{}[[]]'))
-console.log(isValid('function(array){if (array.length === 0) {(}}'))
+console.log(isValid('[]{}[[]]'));
+console.log(isValid('function(array){if (array.length === 0) {(}}'));
