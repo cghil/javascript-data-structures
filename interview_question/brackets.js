@@ -16,7 +16,7 @@ function isValid(code) {
 		if (openers.indexOf(char) >= 0) {
 
 			openersStack.push(char);
-
+ 
 		} else if (closers.indexOf(char) >= 0){
 			
 			if (openersStack.length === 0) {
